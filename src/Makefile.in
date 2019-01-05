@@ -17,14 +17,13 @@ shared_mingw: libircclient.dll
 
 install:
 	-mkdir -p $(DESTDIR)@prefix@/include
-	-mkdir -p $(DESTDIR)@libdir@
+	-mkdir -p $(DESTDIR)@prefix@/lib
 	cp ../include/libircclient.h $(DESTDIR)@prefix@/include/libircclient.h
 	cp ../include/libirc_errors.h $(DESTDIR)@prefix@/include/libirc_errors.h
 	cp ../include/libirc_events.h  $(DESTDIR)@prefix@/include/libirc_events.h 
 	cp ../include/libirc_options.h  $(DESTDIR)@prefix@/include/libirc_options.h 
 	cp ../include/libirc_rfcnumeric.h  $(DESTDIR)@prefix@/include/libirc_rfcnumeric.h 
-	cp libircclient.so $(DESTDIR)@libdir@/libircclient.so.$(APIVERSION)
-	ln -fs libircclient.so.$(APIVERSION) $(DESTDIR)@libdir@/libircclient.so
+	cp libircclient.so $(DESTDIR)@prefix@/lib/libircclient.so
 
 libircclient.so: libircclient.o
 	$(CC) -shared -Wl, -o libircclient.so libircclient.o @LDFLAGS@ @LIBS@
@@ -37,7 +36,7 @@ libircclient.a: libircclient.o
 	$(RANLIB) libircclient.a
 
 clean:
-	rm -f libircclient.a libircclient.o
+	rm -f libircclient.a libircclient.o libircclient.so
 
 distclean: clean
 	-rm -f Makefile
